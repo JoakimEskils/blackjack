@@ -18,20 +18,31 @@ data Card
   deriving (Show, Eq, Enum)
 
 -- Represents the score corresponding to each Card
-cardScore :: Card -> Word
-cardScore Ace = 1
-cardScore Two = 2
-cardScore Three = 3
-cardScore Four = 4
-cardScore Five = 5
-cardScore Six = 6
-cardScore Seven = 7
-cardScore Eight = 8
-cardScore Nine = 9
-cardScore Ten = 10
-cardScore Jack = 10
-cardScore Queen = 10
-cardScore King = 10
+cardPoint :: Card -> Word
+cardPoint Ace = 1
+cardPoint Two = 2
+cardPoint Three = 3
+cardPoint Four = 4
+cardPoint Five = 5
+cardPoint Six = 6
+cardPoint Seven = 7
+cardPoint Eight = 8
+cardPoint Nine = 9
+cardPoint Ten = 10
+cardPoint Jack = 10
+cardPoint Queen = 10
+cardPoint King = 10
+
+-- Returns sum of list of cards with ace possibility of being 11
+cardScore :: [Card] -> (Word, Bool)
+cardScore cards = (score, score <= 11 && Ace `elem` cards)
+  where
+    score = sum (cardPoint <$> cards)
+
+scoreHand :: [Card] -> Word
+scoreHand cards = if aceDuo then score + 10 else score
+  where
+    (score, aceDuo) = cardScore cards
 
 main :: IO ()
 main = putStrLn "Hello from Haskell!"
