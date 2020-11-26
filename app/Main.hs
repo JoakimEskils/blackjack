@@ -1,5 +1,6 @@
 module Main where
 
+-- Possible cards datastructure
 data Card
   = Two
   | Three
@@ -16,6 +17,7 @@ data Card
   | Ace
   deriving (Show, Eq, Enum)
 
+-- Represents the score corresponding to each Card
 cardScore :: Card -> Word
 cardScore Ace = 1
 cardScore Two = 2
