@@ -17,6 +17,32 @@ data Card
   | Ace
   deriving (Show, Eq, Enum)
 
+-- Represents a deck of cards
+type Deck = [Card]
+
+-- Represents action of player
+data Action = Stand | Hit
+  deriving (Show, Eq, Enum)
+
+-- Represents the players known information about the game
+data Observation = Observation
+  { playerScore :: Word,
+    playerHasAce :: Bool,
+    dealerCardShowing :: Card
+  }
+  deriving (Show)
+
+-- Represents the current status
+data Environment = Environment
+  { currObservation :: Observation,
+    player :: Deck,
+    deck :: Deck,
+    dealer :: (Card, Card, Deck),
+    rand :: Rand.StdGen,
+    playerStopped :: Bool
+  }
+  deriving (Show)
+
 -- Represents the score corresponding to each Card
 cardPoint :: Card -> Word
 cardPoint Ace = 1
