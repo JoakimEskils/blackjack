@@ -1,6 +1,10 @@
 # blackjack
 
-From root folder:
+If you don't have stack:
+
+- brew install haskell-stack
+
+Run program from root folder:
 
 - stack build
 
