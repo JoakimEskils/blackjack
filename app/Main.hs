@@ -1,5 +1,7 @@
 module Main where
 
+import qualified System.Random as Rand
+
 -- Possible cards datastructure
 data Card
   = Two
