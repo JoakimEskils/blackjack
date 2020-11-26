@@ -33,16 +33,11 @@ cardPoint Jack = 10
 cardPoint Queen = 10
 cardPoint King = 10
 
--- Returns sum of list of cards with ace possibility of being 11
-cardScore :: [Card] -> (Word, Bool)
-cardScore cards = (score, score <= 11 && Ace `elem` cards)
+-- Returns sum of list of cards, accounting for Ace possibility of being 11
+baseScore :: [Card] -> Word
+baseScore cards = if score <= 11 && Ace `elem` cards then score + 10 else score
   where
     score = sum (cardPoint <$> cards)
-
-scoreHand :: [Card] -> Word
-scoreHand cards = if aceDuo then score + 10 else score
-  where
-    (score, aceDuo) = cardScore cards
 
 main :: IO ()
 main = putStrLn "Hello from Haskell!"
