@@ -1,6 +1,6 @@
 module Main where
 
-import qualified System.Random as Rand
+import System.Random
 
 -- Possible cards datastructure
 data Card
@@ -40,32 +40,32 @@ data Environment = Environment
     player :: Deck,
     deck :: Deck,
     dealer :: (Card, Card, Deck),
-    rand :: Rand.StdGen,
+    rand :: System.Random.StdGen,
     playerStopped :: Bool
   }
   deriving (Show)
 
 -- Represents the score corresponding to each Card
-cardPoint :: Card -> Word
-cardPoint Ace = 1
-cardPoint Two = 2
-cardPoint Three = 3
-cardPoint Four = 4
-cardPoint Five = 5
-cardPoint Six = 6
-cardPoint Seven = 7
-cardPoint Eight = 8
-cardPoint Nine = 9
-cardPoint Ten = 10
-cardPoint Jack = 10
-cardPoint Queen = 10
-cardPoint King = 10
+value :: Card -> Word
+value Ace = 1
+value Two = 2
+value Three = 3
+value Four = 4
+value Five = 5
+value Six = 6
+value Seven = 7
+value Eight = 8
+value Nine = 9
+value Ten = 10
+value Jack = 10
+value Queen = 10
+value King = 10
 
 -- Returns sum of list of cards, accounting for Ace possibility of being 11
 baseScore :: [Card] -> Word
 baseScore cards = if score <= 11 && Ace `elem` cards then score + 10 else score
   where
-    score = sum (cardPoint <$> cards)
+    score = sum (value <$> cards)
 
 main :: IO ()
 main = putStrLn "Hello from Haskell!"
