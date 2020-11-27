@@ -19,7 +19,7 @@ data Card
   | Ace
   deriving (Show, Eq, Enum)
 
--- Represents a deck of cards
+-- Represents the deck of cards
 type Deck = [Card]
 
 -- Represents action of player
@@ -67,5 +67,14 @@ baseScore cards = if score <= 11 && Ace `elem` cards then score + 10 else score
   where
     score = sum (value <$> cards)
 
-main :: IO ()
-main = putStrLn "Hello from Haskell!"
+-- player option to hit or stay
+playerAction :: IO Int
+playerAction = do
+  putStrLn "Pick action"
+  putStrLn "(1) Hit"
+  putStrLn "(2) Stay"
+  optionVal <- getLine
+  return (read optionVal :: Int)
+
+main :: IO Int
+main = playerAction
