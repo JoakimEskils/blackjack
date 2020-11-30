@@ -98,7 +98,7 @@ putEnvironment = do
   let pHand = playerHand bje
   let (dealerShow, dealerHidden, dealerExtraCards) = dealerHand bje
   liftIO $ do
-    if (playerHasStood bje)
+    if playerStop bje
       then do
         let finalDealerHand = dealerShow : dealerHidden : dealerExtraCards
         putStrLn (handToString finalDealerHand)
@@ -110,7 +110,7 @@ putEnvironment = do
     putStrLn (handToString pHand)
     print (scoreHand pHand)
   where
-    handToString hand = intercalate " " (valueStr <$> hand)
+    handToString hand = intercalate "" (valueStr <$> hand)
 
 stepEnv :: (Monad m) => Action -> StateT Environment m (Observation, Double, Bool)
 stepEnv action = do
@@ -131,7 +131,7 @@ stepEnv action = do
             then playOutDealerHand
             else return (newObservation, 0.0, False)
     Stand -> do
-      put $ bje {playerHasStood = True}
+      put $ bje {playerStop = True}
       playOutDealerHand
 
 playOutDealerHand :: (Monad m) => StateT Environment m (Observation, Double, Bool)
@@ -165,13 +165,13 @@ gameLoop chooseAction = do
   if done
     then do
       liftIO $ print reward
-      liftIO $ putStrLn "Episode Finished"
+      liftIO $ putStrLn "Done"
       putEnvironment
       return (newObs, reward)
     else gameLoop chooseAction
 
 chooseActionUser :: (MonadIO m) => m Action
-chooseActionUser = (toEnum . read) <$> (liftIO getLine)
+chooseActionUser = toEnum . read <$> liftIO getLine
 
 startEnvironment :: IO Environment
 startEnvironment = do
@@ -206,6 +206,6 @@ getInput :: String -> (String -> Bool) -> IO String
 getInput string function = do
   putStrLn string
   answer <- getLine
-  if function answer == True
+  if function answer
     then return answer
     else error "Invalid input"

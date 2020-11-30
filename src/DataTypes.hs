@@ -30,10 +30,10 @@ data Observation = Observation
 
 data Environment = Environment
   { currentObservation :: Observation,
-    dealerHand :: (Card, Card, [Card]), -- Shown card, hidden card, dealt cards
+    dealerHand :: (Card, Card, [Card]),
     playerHand :: [Card],
     deck :: [Card],
     randomGenerator :: System.Random.StdGen,
-    playerHasStood :: Bool
+    playerStop :: Bool
   }
   deriving (Show)
