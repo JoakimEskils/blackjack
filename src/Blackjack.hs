@@ -1,5 +1,8 @@
 module Blackjack where
 
+import Control.Monad
+import Control.Monad.Random
+import Control.Monad.State
 import System.Random
 
 -- Possible cards datastructure
@@ -68,10 +71,16 @@ baseScore cards = if score <= 11 && Ace `elem` cards then score + 10 else score
     score = sum (value <$> cards)
 
 -- player option to hit or stay
-playerAction :: IO Int
-playerAction = do
-  putStrLn "Pick action"
-  putStrLn "(1) Hit"
-  putStrLn "(2) Stay"
-  optionVal <- getLine
-  return (read optionVal :: Int)
+playerAction :: (MonadIO m) => m Action
+playerAction = toEnum . read <$> liftIO getLine
+
+--playerAction :: (MonadIO m) => m Action
+--playerAction = do
+--putStrLn "Pick action"
+--putStrLn "(1) Hit"
+--putStrLn "(2) Stay"
+--optionVal <- getLine
+--return (read optionVal :: Int)
+
+startGame :: (MonadIO m) => m Action
+startGame = playerAction

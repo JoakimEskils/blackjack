@@ -34,7 +34,12 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , array
+    , MonadRandom
+    , mtl
     , random
+    , random-shuffle
+    , split
   default-language: Haskell2010
 
 executable blackjack-exe
@@ -47,7 +52,12 @@ executable blackjack-exe
   build-depends:
       blackjack
     , base >=4.7 && <5
+    , array
+    , MonadRandom
+    , mtl
     , random
+    , random-shuffle
+    , split
   default-language: Haskell2010
 
 test-suite blackjack-test
