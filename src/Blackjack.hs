@@ -192,6 +192,10 @@ blackjack = do
   env' <- execStateT resetEnv env
   void $ execStateT (gameLoop chooseActionUser) env'
 
+rules :: IO ()
+rules = do
+  putStrLn "(1) to Hit, (2) to Stay"
+
 otherGame :: IO ()
 otherGame = do
   putStrLn "Future improvements, maybe another card game, or an AI simulator?"
